@@ -25,8 +25,12 @@ const SignupPage: React.FC = () => {
                 "http://localhost:3000/auth/signup",
                 { username, email, password }
             );
-            localStorage.setItem("authToken", response.data.token);
-            navigate("/home");
+
+            if (response.status === 200) {
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('username', username);
+                navigate('/home');
+            }
         } catch (err: unknown) {
             if (err instanceof Error) {
                 setError(err.message || "Signup failed");

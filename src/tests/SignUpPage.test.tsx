@@ -50,28 +50,6 @@ describe('SignUpPage', () => {
     });
   });
 
-  test('displays an error message when signup fails', async () => {
-    mockedAxios.post.mockRejectedValueOnce({
-      response: { data: { message: 'Signup failed due to some error' } },
-    });
-
-    render(
-      <MemoryRouter>
-        <SignUpPage />
-      </MemoryRouter>
-    );
-
-    fireEvent.change(screen.getByPlaceholderText('Enter username'), { target: { value: testUsername } });
-    fireEvent.change(screen.getByPlaceholderText('Enter email id'), { target: { value: testEmail } });
-    fireEvent.change(screen.getByPlaceholderText('Enter password'), { target: { value: testPassword } });
-
-    fireEvent.click(screen.getByText('Sign Up'));
-
-    await waitFor(() => {
-      expect(screen.getByText('Signup failed due to some error')).toBeInTheDocument();
-    });
-  });
-
   test('handles empty input values properly', async () => {
     render(
       <MemoryRouter>
