@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import '../styles/SignUpPage.css';
-import axios from "axios";
+import api from '../components/api';
 import { useNavigate } from "react-router-dom";
-
+import InputField from '../components/InputField';
+import ErrorMessage from '../components/ErrorMessage';
 
 const SignupPage: React.FC = () => {
     const navigate = useNavigate();
@@ -21,10 +22,7 @@ const SignupPage: React.FC = () => {
         }
 
         try {
-            const response = await axios.post(
-                "http://localhost:3000/auth/signup",
-                { username, email, password }
-            );
+            const response = await api.post('/auth/signup', { username, email, password });
 
             if (response.status === 200) {
                 localStorage.setItem('token', response.data.token);
@@ -46,47 +44,40 @@ const SignupPage: React.FC = () => {
                 <div className="header">
                     <h2>Create an Account</h2>
                 </div>
+                {error && <ErrorMessage message={error} />}
                 <form onSubmit={handleSignup}>
-                    <div>
-                        <img id='logo' src='/assets/images/user1.png' alt="User" />
-                        <input
-                            type="text"
-                            value={username}
-                            placeholder="Enter username"
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <img id='logo' src='/assets/images/envelope2.png' alt="User" />
-                        <input
-                            type="email"
-                            value={email}
-                            placeholder="Enter email id"
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <img id='logo' src='/assets/images/key1.png' alt="User" />
-                        <input
-                            type="password"
-                            value={password}
-                            placeholder="Enter password"
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <img id='logo' src='/assets/images/key1.png' alt="Confirm Password" /> {/* ✅ Added confirm password field */}
-                        <input
-                            type="password"
-                            value={confirmPassword}
-                            placeholder="Confirm password"
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            required
-                        />
-                    </div>
+                    <InputField
+                        type="text"
+                        placeholder="Enter username"
+                        ariaLabel="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        imgSrc='/assets/images/user1.png'
+                    />
+                    <InputField
+                        type="email"
+                        placeholder="Enter email id"
+                        ariaLabel="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        imgSrc='/assets/images/envelope2.png'
+                    />
+                    <InputField
+                        type="password"
+                        placeholder="Enter password"
+                        ariaLabel="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        imgSrc='/assets/images/key1.png'
+                    />
+                    <InputField
+                        type="password"
+                        placeholder="Confirm password"
+                        ariaLabel="Confirm Password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        imgSrc='/assets/images/key1.png'
+                    />
                     {error && <p style={{ color: "red" }}>{error}</p>}
                     <button type="submit">Sign Up</button>
                 </form>

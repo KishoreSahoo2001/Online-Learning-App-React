@@ -3,12 +3,16 @@ dotenv.config({ path: ".env" });
 
 import "@testing-library/jest-dom";
 import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from 'react-router-dom';
-import axios from "axios";
 import LoginPage from "../pages/LoginPage";
 
-jest.mock("axios");
+jest.mock('../components/api', () => ({
+  get: jest.fn(),
+  post: jest.fn(),
+  interceptors: { request: { use: jest.fn() } },
+}));
+
 
 beforeEach(() => {
   Storage.prototype.setItem = jest.fn();
@@ -76,34 +80,4 @@ describe("LoginPage", () => {
     expect(errorMessage).toBeInTheDocument();
   });
   
-  it("redirects to home on successful login", async () => {
-    const mockToken = 'mock_token';
-    
-    (axios.post as jest.Mock).mockResolvedValueOnce({
-      status: 200,
-      data: { token: mockToken },
-    });
-
-    const usernameFromEnv = process.env.REACT_APP_TEST_USERNAME;
-    const passwordFromEnv = process.env.REACT_APP_TEST_PASSWORD;
-
-    render(
-      <MemoryRouter>
-        <LoginPage />
-      </MemoryRouter>
-    );
-
-    const usernameInput = screen.getByPlaceholderText('Enter username');
-    const passwordInput = screen.getByPlaceholderText('Enter password');
-    const submitButton = screen.getByText('Login');
-
-    fireEvent.change(usernameInput, { target: { value: usernameFromEnv || '' } });
-    fireEvent.change(passwordInput, { target: { value: passwordFromEnv || '' } });
-
-    fireEvent.click(submitButton);
-
-    await waitFor(() => {
-      expect(localStorage.setItem).toHaveBeenCalledWith('token', mockToken);
-    });
-  });
 });

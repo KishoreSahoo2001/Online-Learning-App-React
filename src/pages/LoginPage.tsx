@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import '../styles/LoginPage.css';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../components/api';
+import InputField from '../components/InputField';
+import ErrorMessage from '../components/ErrorMessage';
 
 const LoginPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/auth/login', {
-                username,
-                password
-            });
+            const response = await api.post('/auth/login', { username, password });
 
             if (response.status === 200) {
                 localStorage.setItem('token', response.data.token);
@@ -23,8 +23,8 @@ const LoginPage = () => {
                 navigate('/home');
             }
         } catch (error: unknown) {
-            console.error("Login error:", error);
             setError('Login failed. Please check your credentials and try again.');
+            console.error('error', error);
         }
     };
 
@@ -38,30 +38,27 @@ const LoginPage = () => {
                 <div className="header">
                     <h2>Log in into your Account</h2>
                 </div>
-                {error && <div className="error">{error}</div>}
+                {error && <ErrorMessage message={error} />}
                 <form onSubmit={handleSubmit}>
-                    <div>
-                        <img id='logo' src="/assets/images/user1.png" alt="User" />
-                        <input
-                            type="text"
-                            placeholder="Enter username"
-                            aria-label="Username"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <img id='logo' src='/assets/images/key1.png' alt="User" />
-                        <input
-                            type="password"
-                            placeholder="Enter password"
-                            aria-label="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                    </div>
+                    <InputField
+                        type="text"
+                        placeholder="Enter username"
+                        ariaLabel="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        imgSrc="/assets/images/user1.png"
+                    />
+                    <InputField
+                        type="password"
+                        placeholder="Enter password"
+                        ariaLabel="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        imgSrc="/assets/images/key1.png"
+                        isPasswordField={true}
+                        showPassword={showPassword}
+                        togglePasswordVisibility={() => setShowPassword(!showPassword)}
+                    />
                     <div className="button-group">
                         <button type="submit">Login</button>
                         <button type="button" onClick={goToSignUp}>Sign Up</button>

@@ -40,6 +40,7 @@ input {
     border-radius: 20px;
     font-size: larger;
     border: 2px solid #49d803;
+    padding-right: 40px;
 }
 
 button {
@@ -78,4 +79,47 @@ button:hover {
 .button-group {
   display: flex;
   justify-content: center;
+}
+
+.password-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.password-container input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #22ad39;
+  opacity: 1;
+  visibility: visible;
+  outline: none;
+  padding: 0;
+  margin: 0;
+}
+
+.eye-icon:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.eye-icon:hover {
+  color: #a7eaab;
 }

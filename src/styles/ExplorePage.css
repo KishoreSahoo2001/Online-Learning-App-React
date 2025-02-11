@@ -1,0 +1,114 @@
+/* General Container */
+.explore-container {
+  display: flex;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 40px 20px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+/* Left Section - Book & Purchase */
+.left-section {
+  flex: 1;
+  max-width: 40%;
+  text-align: center;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.book-image {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.book-details {
+  margin-top: 15px;
+}
+
+.book-details h2 {
+  font-size: 22px;
+  color: #222;
+  margin-bottom: 5px;
+}
+
+.book-details p {
+  font-size: 16px;
+  color: #666;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: bold;
+  color: #ff6f00;
+  margin-top: 10px;
+}
+
+.buy-button {
+  background: #ff6f00;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 15px;
+  transition: background 0.3s ease;
+}
+
+.buy-button:hover {
+  background: #e65c00;
+}
+
+/* Right Section - Course Details */
+.right-section {
+  flex: 2;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2px;
+}
+
+.course-info {
+  display: flex;
+  justify-content: space-between;
+  background: #f7f7f7;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.course-info p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Bullet List */
+.bullet-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 10px;
+}
+
+.bullet-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  padding: 8px 0;
+  color: #444;
+}
+
+/* Icons */
+.icon {
+  color: #ff6f00;
+  font-size: 18px;
+}
