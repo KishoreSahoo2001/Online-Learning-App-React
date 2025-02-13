@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import '../styles/SignUpPage.css';
-import api from '../components/api';
+import api from '../interceptor/api';
 import { useNavigate } from "react-router-dom";
 import InputField from '../components/InputField';
 import ErrorMessage from '../components/ErrorMessage';

@@ -2,10 +2,10 @@ import React from 'react';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { MemoryRouter} from 'react-router-dom';
 import HomePage from '../pages/HomePage';
-import api from '../components/api';
+import api from '../interceptor/api';
 import { mockArticles } from '../__mocks__/mockData';
 
-jest.mock('../components/api', () => ({
+jest.mock('../interceptor/api', () => ({
   get: jest.fn(),
 }));
 

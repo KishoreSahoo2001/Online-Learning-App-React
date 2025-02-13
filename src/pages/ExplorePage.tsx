@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import api from '../components/api';
+import api from '../interceptor/api';
 import '../styles/ExplorePage.css';
 import BookCard from '../components/BookCard';
 import CourseDetails from '../components/CourseDetails';

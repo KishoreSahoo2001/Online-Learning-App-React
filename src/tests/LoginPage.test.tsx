@@ -7,7 +7,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from 'react-router-dom';
 import LoginPage from "../pages/LoginPage";
 
-jest.mock('../components/api', () => ({
+jest.mock('../interceptor/api', () => ({
   get: jest.fn(),
   post: jest.fn(),
   interceptors: { request: { use: jest.fn() } },

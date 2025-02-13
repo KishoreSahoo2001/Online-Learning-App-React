@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Header.css';
 import { imagePaths } from "../utils/imagePaths";
-import api from '../components/api';
+import api from '../interceptor/api';
 
 interface Article {
   id: number;

@@ -6,9 +6,9 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import SignUpPage from "../pages/SignUpPage";
 import { MemoryRouter } from 'react-router-dom';
-import api from '../components/api';
+import api from '../interceptor/api';
 
-jest.mock('../components/api', () => ({
+jest.mock('../interceptor/api', () => ({
   get: jest.fn(),
   post: jest.fn(),
   interceptors: { request: { use: jest.fn() } },

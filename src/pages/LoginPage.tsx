@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/LoginPage.css';
 import { useNavigate } from 'react-router-dom';
-import api from '../components/api';
+import api from '../interceptor/api';
 import InputField from '../components/InputField';
 import ErrorMessage from '../components/ErrorMessage';
 
