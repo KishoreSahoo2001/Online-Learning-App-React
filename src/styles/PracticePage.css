@@ -92,3 +92,21 @@ button:active {
     padding: 0 10px;
   }
 }
+
+.dropdown-container {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.dropdown-container label {
+  font-size: 1.2rem;
+  margin-right: 10px;
+}
+
+.dropdown-container select {
+  font-size: 1rem;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
