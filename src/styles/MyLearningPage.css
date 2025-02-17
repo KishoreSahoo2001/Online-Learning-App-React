@@ -1,0 +1,78 @@
+.learning-container {
+  text-align: center;
+  padding: 30px;
+  font-family: 'Arial', sans-serif;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+}
+
+h1 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.purchased-articles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.learning-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.learning-card:hover {
+  transform: scale(1.05);
+}
+
+.status {
+  font-size: 16px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.status.completed {
+  color: #28a745;
+}
+
+.status.not-started {
+  color: #dc3545;
+}
+
+.status-button {
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  margin-left: 0;
+}
+
+.status-button.completed-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.status-button.completed-btn:hover {
+  background-color: #218838;
+}
+
+.status-button.not-started-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.status-button.not-started-btn:hover {
+  background-color: #c82333;
+}

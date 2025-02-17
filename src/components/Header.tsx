@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/Header.css';
 import { imagePaths } from "../utils/imagePaths";
 import api from '../interceptor/api';
@@ -24,6 +24,7 @@ const categories = [
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [articles, setArticles] = useState<Article[]>([]);
   const [filteredArticlesForDropdown, setFilteredArticlesForDropdown] = useState<Article[]>([]);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
@@ -68,9 +69,12 @@ const Header: React.FC = () => {
       <div className="Upper">
         <img src="/assets/images/logo.png" alt="logo" className="logo" />
         <div className="nav-buttons">
+        {location.pathname !== "/home" && (
+            <button onClick={() => navigate('/home')}>Home</button>
+          )}
           <button onClick={() => navigate('/purchases')}>My Purchases</button>
-          <button onClick={() => navigate('/my-learning')}>My Learning</button>
           <button onClick={() => navigate('/practice')}>Practice</button>
+          <button onClick={() => navigate('/my-learning')}>My Learning</button>
         </div>
         <button className="logout-button" onClick={handleLogout}>Logout</button>
       </div>

@@ -56,7 +56,6 @@ const HomePage: React.FC = () => {
       <Header />
       <div className="content">
         
-        {/* Welcome Section */}
         <WelcomeSection
           username={username}
           searchQuery={searchQuery}
@@ -66,7 +65,6 @@ const HomePage: React.FC = () => {
           isSearching={isSearching}
         />
 
-        {/* Articles List */}
         <ArticlesList 
           articles={filteredArticles.map(article => ({
             ...article,

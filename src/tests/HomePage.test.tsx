@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, useNavigate } from 'react-router-dom';
 import HomePage from '../pages/HomePage';
 import api from '../interceptor/api';
 import { mockArticles } from '../__mocks__/mockData';
@@ -9,7 +9,6 @@ jest.mock('../interceptor/api', () => ({
   get: jest.fn(),
 }));
 
-import { useNavigate } from 'react-router-dom';
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: jest.fn(),

@@ -5,6 +5,10 @@ import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import HomePage from "./pages/HomePage";
 import ExplorePage from './pages/ExplorePage';
+import PaymentPage from './pages/PaymentPage';
+import MyLearningPage from './pages/MyLearningPage';
+import PracticePage from './pages/PracticePage';
+import MyPurchasesPage from './pages/MyPurchases';
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 const App = () => {
@@ -18,6 +22,10 @@ const App = () => {
             <Route element={<ProtectedRoute />}>
               <Route path="/home" element={<HomePage />} />
               <Route path="/explore" element={<ExplorePage />} />
+              <Route path="/payment" element={<PaymentPage />} />
+              <Route path="/my-learning" element={<MyLearningPage />} />
+              <Route path="/practice" element={<PracticePage />} />
+              <Route path="/purchases" element={<MyPurchasesPage />} />
             </Route>
           </Route>
 

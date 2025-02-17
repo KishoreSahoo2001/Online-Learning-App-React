@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import api from '../interceptor/api';
 import '../styles/ExplorePage.css';
 import BookCard from '../components/BookCard';
@@ -9,10 +9,16 @@ import { Article } from '../types/types'
 const ExplorePage: React.FC = () => {
     const [article, setArticle] = useState<Article | null>(null);
     const [loading, setLoading] = useState(true);
+    const [purchasedArticles, setPurchasedArticles] = useState<Set<number>>(new Set());
     const location = useLocation();
+    const navigate = useNavigate();
     const articleId = location.state?.articleId;
     const articlePrice = location.state?.articlePrice;
     const articleTitle = location.state?.articleTitle;
+
+    interface Purchase {
+        id: number;
+      }
 
     useEffect(() => {
         const fetchArticleDetails = async () => {
@@ -25,24 +31,50 @@ const ExplorePage: React.FC = () => {
                 setLoading(false);
             }
         };
+        const fetchPurchasedArticles = async () => {
+            try {
+              const purchasesResponse = await api.get<{ purchases: Purchase[] }>('/articles/purchases');
+          
+              const purchasedArticleIds: Set<number> = new Set(
+                purchasesResponse.data.purchases.map((purchase) => purchase.id)
+              );
+          
+              setPurchasedArticles(purchasedArticleIds);
+            } catch (error) {
+              console.error('Error fetching purchased articles:', error);
+            }
+          };
+
         fetchArticleDetails();
+        fetchPurchasedArticles();
     }, [articleId]);
 
     if (loading) return <p>Loading...</p>;
     if (!article) return <p>Article not found</p>;
 
+    const handleBuyNow = () => {
+        navigate('/payment', {
+            state: {
+                articleId: articleId,
+                price: articlePrice,
+                title: articleTitle
+            }
+        });
+    };
+
+    const isPurchased = purchasedArticles.has(articleId);
+
     return (
         <div className="explore-container">
-            {/* BookCard Component */}
             <BookCard 
                 title={articleTitle}
                 author={article.author_name}
                 image={article.book_image}
                 price={articlePrice}
-                purchased={article.purchased}
+                purchased={isPurchased}
+                onBuyNow={handleBuyNow}
             />
 
-            {/* CourseDetails Component */}
             <CourseDetails 
                 language={article.language}
                 rating={article.rating}

@@ -14,9 +14,8 @@ const WelcomeSection: React.FC<WelcomeSectionProps> = ({
 }) => {
   return (
     <div>
-      <h1>Hello, {username}. What Do You Want To Learn?</h1>
+      <h1>Hello, {username} What Do You Want To Learn?</h1>
 
-      {/* Search Bar */}
       <div className="search-bar">
         <input
           type="text"
