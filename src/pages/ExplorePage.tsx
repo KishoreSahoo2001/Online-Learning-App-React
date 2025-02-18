@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import api from '../interceptor/api';
 import '../styles/ExplorePage.css';
 import BookCard from '../components/BookCard';
 import CourseDetails from '../components/CourseDetails';
+import { addToCart } from '../redux/cartSlice';
 import { Article } from '../types/types'
+import { AppDispatch } from '../redux/store';
 
 const ExplorePage: React.FC = () => {
     const [article, setArticle] = useState<Article | null>(null);
     const [loading, setLoading] = useState(true);
     const [purchasedArticles, setPurchasedArticles] = useState<Set<number>>(new Set());
+    const [isAddedToCart, setIsAddedToCart] = useState(false);
     const location = useLocation();
-    const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
     const articleId = location.state?.articleId;
-    const articlePrice = location.state?.articlePrice;
+    const articlePrice: number = location.state?.articlePrice || 0;
     const articleTitle = location.state?.articleTitle;
 
     interface Purchase {
@@ -49,31 +53,30 @@ const ExplorePage: React.FC = () => {
         fetchPurchasedArticles();
     }, [articleId]);
 
+    const handleAddToCart = (id: number, title: string, price: number) => {
+        dispatch(addToCart({ id, title, price }));
+
+        setIsAddedToCart(true);
+        setTimeout(() => setIsAddedToCart(false), 2000);
+    };
+
     if (loading) return <p>Loading...</p>;
     if (!article) return <p>Article not found</p>;
-
-    const handleBuyNow = () => {
-        navigate('/payment', {
-            state: {
-                articleId: articleId,
-                price: articlePrice,
-                title: articleTitle
-            }
-        });
-    };
 
     const isPurchased = purchasedArticles.has(articleId);
 
     return (
         <div className="explore-container">
             <BookCard 
+                id={article.id}
                 title={articleTitle}
                 author={article.author_name}
                 image={article.book_image}
                 price={articlePrice}
                 purchased={isPurchased}
-                onBuyNow={handleBuyNow}
+                onBuyNow={handleAddToCart}
             />
+            {isAddedToCart && <div className="popup">Added to Cart</div>}
 
             <CourseDetails 
                 language={article.language}

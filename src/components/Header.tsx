@@ -75,6 +75,7 @@ const Header: React.FC = () => {
           <button onClick={() => navigate('/purchases')}>My Purchases</button>
           <button onClick={() => navigate('/practice')}>Practice</button>
           <button onClick={() => navigate('/my-learning')}>My Learning</button>
+          <button onClick={() => navigate('/checkout')}>Checkout</button>
         </div>
         <button className="logout-button" onClick={handleLogout}>Logout</button>
       </div>
