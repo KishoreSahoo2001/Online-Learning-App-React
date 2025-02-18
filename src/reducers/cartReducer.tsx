@@ -1,15 +1,27 @@
 import { ADD_TO_CART } from '../actions/cartActions';
-import { Article } from '../types/types';
+
+interface CartItem {
+    id: number;
+    title: string;
+    price: number;
+}
 
 interface CartState {
-    cartItems: { id: number; title: string; price: number }[];
+    cartItems: CartItem[];
 }
+
+interface AddToCartAction {
+    type: typeof ADD_TO_CART;
+    payload: CartItem;
+}
+
+type CartAction = AddToCartAction;
 
 const initialState: CartState = {
     cartItems: [],
 };
 
-const cartReducer = (state = initialState, action: any): CartState => {
+const cartReducer = (state = initialState, action: CartAction): CartState => {
     switch (action.type) {
         case ADD_TO_CART:
             return {
