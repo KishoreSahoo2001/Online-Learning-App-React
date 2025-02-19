@@ -8,6 +8,7 @@ import { Article } from '../types/types';
 import '../styles/HomePage.css';
 import WelcomeSection from '../components/WelcomeSection';
 import ArticlesList from '../components/ArticlesList';
+import apiRoutes from "../routes/apiRoutes";
 
 const HomePage: React.FC = () => {
   const [username, setUsername] = useState<string>('User');
@@ -22,7 +23,7 @@ const HomePage: React.FC = () => {
 
     const fetchArticles = async () => {
       try {
-        const response = await api.get('/articles');
+        const response = await api.get(apiRoutes.GET_ARTICLES);
         setArticles(response.data.articles);
         setFilteredArticles(response.data.articles);
       } catch (error) {

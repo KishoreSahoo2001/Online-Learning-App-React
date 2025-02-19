@@ -8,6 +8,7 @@ import CourseDetails from '../components/CourseDetails';
 import { addToCart } from '../redux/cartSlice';
 import { Article } from '../types/types'
 import { AppDispatch } from '../redux/store';
+import apiRoutes from "../routes/apiRoutes";
 
 const ExplorePage: React.FC = () => {
     const [article, setArticle] = useState<Article | null>(null);
@@ -27,7 +28,7 @@ const ExplorePage: React.FC = () => {
     useEffect(() => {
         const fetchArticleDetails = async () => {
             try {
-                const response = await api.get(`/articles/article-details/${articleId}`);
+                const response = await api.get(apiRoutes.GET_ARTICLE_DETAILS(articleId));
                 setArticle(response.data.articleDetails);
             } catch (error) {
                 console.error('Error fetching article details:', error);
@@ -37,7 +38,7 @@ const ExplorePage: React.FC = () => {
         };
         const fetchPurchasedArticles = async () => {
             try {
-              const purchasesResponse = await api.get<{ purchases: Purchase[] }>('/articles/purchases');
+              const purchasesResponse = await api.get<{ purchases: Purchase[] }>(apiRoutes.PURCHASES);
           
               const purchasedArticleIds: Set<number> = new Set(
                 purchasesResponse.data.purchases.map((purchase) => purchase.id)

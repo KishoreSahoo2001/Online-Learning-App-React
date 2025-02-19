@@ -5,6 +5,7 @@ import { RootState } from '../redux/store';
 import api from '../interceptor/api';
 import '../styles/CheckoutPage.css';
 import { clearCart, removeFromCart } from '../redux/cartSlice';
+import apiRoutes from "../routes/apiRoutes";
 
 const CheckoutPage: React.FC = () => {
     const navigate = useNavigate();
@@ -31,7 +32,7 @@ const CheckoutPage: React.FC = () => {
     const handlePayment = async () => {
         try {
             for (const item of cartItems) {
-                const paymentResponse = await api.post('/payments/buy', {
+                const paymentResponse = await api.post(apiRoutes.BUY_ARTICLE, {
                     articleId: item.id,
                     amount: item.price,
                 });
@@ -41,7 +42,7 @@ const CheckoutPage: React.FC = () => {
                 }
 
                 const { transactionId } = paymentResponse.data;
-                await api.post('/payments/confirm', { transactionId });
+                await api.post(apiRoutes.CONFIRM_PAYMENT, { transactionId });
             }
 
             dispatch(clearCart());

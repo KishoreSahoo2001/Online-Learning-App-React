@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../interceptor/api';
 import '../styles/MyLearningPage.css';
 import MyLearningCard from '../components/MyLearningCard';
+import apiRoutes from "../routes/apiRoutes";
 
 const MyLearningPage: React.FC = () => {
 
@@ -25,10 +26,10 @@ const MyLearningPage: React.FC = () => {
 
       if (token) {
         try {
-          const progressResponse = await api.get('/progress/overall');
+          const progressResponse = await api.get(apiRoutes.OVERALL_PROGRESS);
           setProgress(progressResponse.data.progress);
           
-          const purchasedResponse = await api.get('/articles/purchases');
+          const purchasedResponse = await api.get(apiRoutes.PURCHASES);
           setPurchasedArticles(purchasedResponse.data.purchases); 
         } catch (error) {
           console.error('Error fetching progress or articles:', error);
@@ -43,7 +44,7 @@ const MyLearningPage: React.FC = () => {
 
     if (token) {
       try {
-        await api.put('/progress/update', {
+        await api.put(apiRoutes.UPDATE_PROGRESS, {
           article_id: articleId,
           quiz_id: quizId,
           status,
@@ -51,7 +52,7 @@ const MyLearningPage: React.FC = () => {
         });
         alert('Progress updated successfully!');
 
-        const updatedProgressResponse = await api.get('/progress/overall');
+        const updatedProgressResponse = await api.get(apiRoutes.OVERALL_PROGRESS);
         setProgress(updatedProgressResponse.data.progress);
         
       } catch (error) {

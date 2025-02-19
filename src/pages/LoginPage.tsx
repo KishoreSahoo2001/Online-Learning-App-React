@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../interceptor/api';
 import InputField from '../components/InputField';
 import ErrorMessage from '../components/ErrorMessage';
+import apiRoutes from "../routes/apiRoutes";
 
 const LoginPage = () => {
     const [username, setUsername] = useState('');
@@ -15,7 +16,7 @@ const LoginPage = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await api.post('/auth/login', { username, password });
+            const response = await api.post(apiRoutes.LOGIN, { username, password });
 
             if (response.status === 200) {
                 localStorage.setItem('token', response.data.token);

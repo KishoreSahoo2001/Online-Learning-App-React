@@ -4,6 +4,7 @@ import "../styles/MyPurchases.css";
 import BookCard from "../components/BookCard";
 import { useNavigate } from "react-router-dom";
 import { getArticleImage } from "../utils/imagePaths";
+import apiRoutes from "../routes/apiRoutes";
 
 interface Purchase {
   id: number;
@@ -20,7 +21,7 @@ const MyPurchases: React.FC = () => {
   useEffect(() => {
     const fetchPurchasedBooks = async () => {
       try {
-        const response = await api.get("/articles/purchases");
+        const response = await api.get(apiRoutes.PURCHASES);
         setPurchasedBooks(response.data.purchases);
       } catch (error) {
         console.error("Error fetching purchased books:", error);

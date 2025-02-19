@@ -4,6 +4,7 @@ import "../styles/PracticePage.css";
 import QuizSelection from "../components/QuizSelection";
 import QuizQuestion from "../components/QuizQuestion";
 import SubmitButton from "../components/SubmitButton";
+import apiRoutes from "../routes/apiRoutes";
 
 interface Article {
   id: number;
@@ -38,7 +39,7 @@ const PracticePage: React.FC = () => {
   useEffect(() => {
     const fetchPurchasedArticles = async () => {
       try {
-        const response = await api.get("/articles/purchases");
+        const response = await api.get(apiRoutes.PURCHASES);
         setPurchasedArticles(response.data.purchases || []);
       } catch (error) {
         console.error("Error fetching purchased articles:", error);
@@ -56,7 +57,7 @@ const PracticePage: React.FC = () => {
         if (!selectedArticle) return;
         
         try {
-          const response = await api.get(`/quizzes/${selectedArticle}`);
+          const response = await api.get(apiRoutes.GET_QUIZZES(selectedArticle));
           setQuizzes(response.data.quizzes || []);
         } catch (error) {
           console.error("Error fetching quizzes:", error);
@@ -71,7 +72,7 @@ const PracticePage: React.FC = () => {
     if (selectedQuiz) {
       const fetchQuestions = async () => {
         try {
-          const response = await api.get(`/quizzes/${selectedQuiz}/questions`);
+          const response = await api.get(apiRoutes.GET_QUIZ_QUESTIONS(selectedQuiz));
           setQuestions(response.data.questions);
         } catch (error) {
           console.error("Error fetching questions:", error);
@@ -91,7 +92,7 @@ const PracticePage: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await api.post("/quizzes/submit", {
+      const response = await api.post(apiRoutes.SUBMIT_QUIZ, {
         quiz_id: selectedQuiz,
         answers,
       });

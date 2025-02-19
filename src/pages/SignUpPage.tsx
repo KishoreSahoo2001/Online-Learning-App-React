@@ -4,6 +4,7 @@ import api from '../interceptor/api';
 import { useNavigate } from "react-router-dom";
 import InputField from '../components/InputField';
 import ErrorMessage from '../components/ErrorMessage';
+import apiRoutes from "../routes/apiRoutes";
 
 const SignupPage: React.FC = () => {
     const navigate = useNavigate();
@@ -22,7 +23,7 @@ const SignupPage: React.FC = () => {
         }
 
         try {
-            const response = await api.post('/auth/signup', { username, email, password });
+            const response = await api.post(apiRoutes.SIGNUP, { username, email, password });
 
             if (response.status === 200) {
                 localStorage.setItem('token', response.data.token);
