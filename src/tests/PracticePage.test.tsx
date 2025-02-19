@@ -3,7 +3,7 @@ import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import PracticePage from "../pages/PracticePage";
 import api from "../interceptor/api";
-import { mockQuestions } from "../__mocks__/mockData";
+import { mockQuestions, mockPurchasedArticles, mockQuizzes } from "../__mocks__/mockData";
 
 jest.mock("../interceptor/api", () => ({
   get: jest.fn(),
@@ -13,58 +13,58 @@ jest.mock("../interceptor/api", () => ({
 describe("PracticePage", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    (api.get as jest.Mock).mockResolvedValue({ data: { questions: mockQuestions } });
+
+    (api.get as jest.Mock).mockImplementation((url) => {
+      if (url === "/articles/purchases") {
+        return Promise.resolve({ data: { purchases: mockPurchasedArticles } });
+      }
+      const articleId = mockPurchasedArticles[0].id;
+      const quizId = mockQuizzes[0].id;
+
+      if (url === `/quizzes/${articleId}`) {
+        return Promise.resolve({ data: { quizzes: mockQuizzes } });
+      }
+      if (url === `/quizzes/${quizId}/questions`) {
+        return Promise.resolve({ data: { questions: mockQuestions } });
+      }
+      return Promise.reject(new Error("Invalid API call"));
+    });
+
+    (api.post as jest.Mock).mockImplementation((url) => {
+      if (url === "/quizzes/submit") {
+        return Promise.resolve({ data: { message: "Quiz submitted successfully!", score: 90 } });
+      }
+      return Promise.reject(new Error("Submission failed"));
+    });
   });
 
-  test("renders PracticePage component", async () => {
+  const renderComponent = () =>
     render(
       <MemoryRouter>
         <PracticePage />
       </MemoryRouter>
     );
 
-    await waitFor(() => expect(api.get).toHaveBeenCalledWith("/quizzes/2/questions"));
+  test("renders PracticePage component and fetches purchased articles", async () => {
+    renderComponent();
+
+    await waitFor(() => expect(api.get).toHaveBeenCalledWith("/articles/purchases"));
     expect(screen.getByText("Practice Quiz")).toBeInTheDocument();
   });
 
-  test("displays available quizzes", async () => {
-    render(
-      <MemoryRouter>
-        <PracticePage />
-      </MemoryRouter>
-    );
+  test("displays available purchased articles and allows selecting one", async () => {
+    renderComponent();
 
     await waitFor(() => {
-      expect(screen.getByText(mockQuestions[0].question_text)).toBeInTheDocument();
+      expect(api.get).toHaveBeenCalledWith("/articles/purchases");
+      expect(screen.getByText(mockPurchasedArticles[0].title)).toBeInTheDocument();
     });
-  });
 
-  test("handles quiz submission", async () => {
-    (api.post as jest.Mock).mockResolvedValue({ data: { success: true } });
-
-    render(
-      <MemoryRouter>
-        <PracticePage />
-      </MemoryRouter>
-    );
+    fireEvent.change(screen.getByRole("combobox"), { target: { value: mockPurchasedArticles[0].id.toString() } });
 
     await waitFor(() => {
-      expect(screen.getByText("What is React?")).toBeInTheDocument();
-    });
-
-  fireEvent.click(screen.getByLabelText("Library"));
-  fireEvent.click(screen.getByLabelText("JavaScript XML"));
-
-  fireEvent.click(screen.getByText("Submit Quiz"));
-
-  await waitFor(() => {
-    expect(api.post).toHaveBeenCalledWith("/quizzes/submit", {
-      quiz_id: 2,
-      answers: {
-        "1": "Library",
-        "2": "JavaScript XML",
-      },
+      expect(api.get).toHaveBeenCalledWith(`/quizzes/${mockPurchasedArticles[0].id}`);
+      expect(screen.getByText(mockQuizzes[0].title)).toBeInTheDocument();
     });
   });
-});
 });

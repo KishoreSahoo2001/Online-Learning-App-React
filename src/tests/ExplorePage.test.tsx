@@ -1,8 +1,10 @@
 import React from 'react';
 import { render, screen, waitFor, fireEvent, act } from '@testing-library/react';
-import { MemoryRouter, useNavigate } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import ExplorePage from '../pages/ExplorePage';
 import api from '../interceptor/api';
+import { addToCart } from '../redux/cartSlice';
 import { mockArticleDetails } from '../__mocks__/mockData';
 
 jest.mock('../interceptor/api', () => ({
@@ -20,13 +22,17 @@ jest.mock("react-router-dom", () => {
   };
 });
 
+jest.mock('react-redux', () => ({
+  useDispatch: jest.fn(),
+}));
+
 describe("ExplorePage", () => {
-  let mockNavigate: jest.Mock;
+  let mockDispatch: jest.Mock;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockNavigate = jest.fn();
-    (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
+    mockDispatch = jest.fn();
+    (useDispatch as unknown as jest.Mock).mockReturnValue(mockDispatch);
   });
 
   test("renders loading state initially", () => {
@@ -80,39 +86,35 @@ describe("ExplorePage", () => {
 
   test("handles purchase status correctly", async () => {
     (api.get as jest.Mock).mockImplementation((url) => {
-      console.log(`Mock API call: ${url}`);
-  
       if (url === "/articles/article-details/1") {
-        console.log("Returning article details:", mockArticleDetails);
         return Promise.resolve({ data: { articleDetails: mockArticleDetails } });
       }
       if (url === "/articles/purchases") {
-        console.log("Returning purchases: [{ id: 1 }]"); 
         return Promise.resolve({ data: { purchases: [{ id: 1 }] } });
       }
-  
-      console.log("API Error for URL:", url);
       return Promise.reject(new Error("API Error"));
     });
-  
+
     render(
       <MemoryRouter>
         <ExplorePage />
       </MemoryRouter>
     );
-  
+
     await waitFor(() => {
       expect(api.get).toHaveBeenCalledWith("/articles/purchases");
     });
+
+    expect(screen.queryByRole("button", { name: /add to cart/i })).not.toBeInTheDocument();
   });
 
-  test("handles 'Buy Now' button click", async () => {
+  test("handles 'Add to Cart' button click", async () => {
     (api.get as jest.Mock).mockImplementation((url) => {
       if (url === "/articles/article-details/1") {
         return Promise.resolve({ data: { articleDetails: mockArticleDetails } });
       }
       if (url === "/articles/purchases") {
-        return Promise.resolve({ purchases: [] });
+        return Promise.resolve({ data: { purchases: [] } });
       }
       return Promise.reject(new Error("API Error"));
     });
@@ -125,20 +127,58 @@ describe("ExplorePage", () => {
 
     await waitFor(() => expect(api.get).toHaveBeenCalledWith("/articles/article-details/1"));
 
-    const buyNowButton = await screen.findByRole("button", { name: /buy now/i });
+    const addToCartButton = await screen.findByRole("button", { name: /add to cart/i });
     
     act(() => {
-      fireEvent.click(buyNowButton);
+      fireEvent.click(addToCartButton);
     });
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/payment", {
-        state: {
-          articleId: 1,
-          price: 20,
-          title: "React Basics",
-        },
-      });
+      expect(mockDispatch).toHaveBeenCalledWith(addToCart({ id: 1, title: "React Basics", price: 20 }));
     });
+
+    expect(screen.getByText(/added to cart/i)).toBeInTheDocument();
   });
+
+  test("displays course details correctly", async () => {
+    (api.get as jest.Mock).mockImplementation((url) => {
+      if (url === "/articles/article-details/1") {
+        return Promise.resolve({ data: { articleDetails: mockArticleDetails } });
+      }
+      if (url === "/articles/purchases") {
+        return Promise.resolve({ data: { purchases: [] } });
+      }
+      return Promise.reject(new Error("API Error"));
+    });
+
+    render(
+      <MemoryRouter>
+        <ExplorePage />
+      </MemoryRouter>
+    );
+
+    await waitFor(() => expect(api.get).toHaveBeenCalledWith("/articles/article-details/1"));
+
+    expect(screen.getByText(/language/i)).toBeInTheDocument();
+    expect(screen.getByText(/rating/i)).toBeInTheDocument();
+    expect(screen.getByText(/learners/i)).toBeInTheDocument();
+    expect(screen.getByText(/what you'll learn/i)).toBeInTheDocument();
+    expect(screen.getByText(/this course includes/i)).toBeInTheDocument();
+    expect(screen.getByText(/course content/i)).toBeInTheDocument();
+  });
+
+  test("handles API failure gracefully", async () => {
+    (api.get as jest.Mock).mockRejectedValue(new Error("API Error"));
+
+    render(
+      <MemoryRouter>
+        <ExplorePage />
+      </MemoryRouter>
+    );
+
+    await waitFor(() => expect(api.get).toHaveBeenCalledTimes(2));
+
+    expect(screen.getByText(/article not found/i)).toBeInTheDocument();
+  });
+
 });
