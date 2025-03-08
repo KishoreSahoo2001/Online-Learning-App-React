@@ -23,10 +23,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-tsconfig.json
 sonar-project.properties
-config-overrides.js
-babel.config.js
-__mocks__
 .scannerwork
 .vscode
