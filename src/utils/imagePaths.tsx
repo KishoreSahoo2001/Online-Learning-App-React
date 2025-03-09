@@ -19,15 +19,15 @@ const articleCategoryMap: Record<string, string> = {
 };
 
 export const imagePaths: Record<string, string> = {
-  Development: "${process.env.PUBLIC_URL}/assets/images/Development.jpg",
-  Business: "${process.env.PUBLIC_URL}/assets/images/Business.jpg",
-  Finance: "${process.env.PUBLIC_URL}/assets/images/Finance.jpg",
-  Software: "${process.env.PUBLIC_URL}/assets/images/Software.jpg",
-  Design: "${process.env.PUBLIC_URL}/assets/images/Design.jpg",
-  Health: "${process.env.PUBLIC_URL}/assets/images/Health.jpg",
-  Music: "${process.env.PUBLIC_URL}/assets/images/Music.jpg",
-  Sports: "${process.env.PUBLIC_URL}/assets/images/Sports.jpg",
-  Default: "${process.env.PUBLIC_URL}/assets/images/image2.jpg",
+  Development: '${process.env.PUBLIC_URL}/assets/images/Development.jpg',
+  Business: '${process.env.PUBLIC_URL}/assets/images/Business.jpg',
+  Finance: '${process.env.PUBLIC_URL}/assets/images/Finance.jpg',
+  Software: '${process.env.PUBLIC_URL}/assets/images/Software.jpg',
+  Design: '${process.env.PUBLIC_URL}/assets/images/Design.jpg',
+  Health: '${process.env.PUBLIC_URL}/assets/images/Health.jpg',
+  Music: '${process.env.PUBLIC_URL}/assets/images/Music.jpg',
+  Sports: '${process.env.PUBLIC_URL}/assets/images/Sports.jpg',
+  Default: '${process.env.PUBLIC_URL}/assets/images/image2.jpg',
 };
 
 export const getArticleImage = (title: string): string => {
