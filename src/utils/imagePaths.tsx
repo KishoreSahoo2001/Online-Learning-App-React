@@ -19,15 +19,15 @@ const articleCategoryMap: Record<string, string> = {
 };
 
 export const imagePaths: Record<string, string> = {
-  Development: "/assets/images/Development.jpg",
-  Business: "/assets/images/Business.jpg",
-  Finance: "/assets/images/Finance.jpg",
-  Software: "/assets/images/Software.jpg",
-  Design: "/assets/images/Design.jpg",
-  Health: "/assets/images/Health.jpg",
-  Music: "/assets/images/Music.jpg",
-  Sports: "/assets/images/Sports.jpg",
-  Default: "/assets/images/image2.jpg",
+  Development: "./assets/images/Development.jpg",
+  Business: "./assets/images/Business.jpg",
+  Finance: "./assets/images/Finance.jpg",
+  Software: "./assets/images/Software.jpg",
+  Design: "./assets/images/Design.jpg",
+  Health: "./assets/images/Health.jpg",
+  Music: "./assets/images/Music.jpg",
+  Sports: "./assets/images/Sports.jpg",
+  Default: "./assets/images/image2.jpg",
 };
 
 export const getArticleImage = (title: string): string => {
