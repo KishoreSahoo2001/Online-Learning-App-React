@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/Online-Learning-App-React/static/css/main.9883a64b.css",
-    "main.js": "/Online-Learning-App-React/static/js/main.928716e9.js",
+    "main.js": "/Online-Learning-App-React/static/js/main.eecd0bac.js",
     "static/media/page.jpg": "/Online-Learning-App-React/static/media/page.7398e458ae5b616ddfa3.jpg",
     "index.html": "/Online-Learning-App-React/index.html",
     "main.9883a64b.css.map": "/Online-Learning-App-React/static/css/main.9883a64b.css.map",
-    "main.928716e9.js.map": "/Online-Learning-App-React/static/js/main.928716e9.js.map"
+    "main.eecd0bac.js.map": "/Online-Learning-App-React/static/js/main.eecd0bac.js.map"
   },
   "entrypoints": [
     "static/css/main.9883a64b.css",
-    "static/js/main.928716e9.js"
+    "static/js/main.eecd0bac.js"
   ]
 }
