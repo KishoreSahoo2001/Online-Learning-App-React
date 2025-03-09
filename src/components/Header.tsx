@@ -67,7 +67,7 @@ const Header: React.FC = () => {
   return (
     <header className="header">
       <div className="Upper">
-        <img src="/assets/images/logo.png" alt="logo" className="logo" />
+        <img src="/Online-Learning-App-React/assets/images/logo.png" alt="logo" className="logo" />
         <div className="nav-buttons">
         {location.pathname !== "/home" && (
             <button onClick={() => navigate('/home')}>Home</button>

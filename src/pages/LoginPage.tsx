@@ -47,7 +47,7 @@ const LoginPage = () => {
                         ariaLabel="Username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        imgSrc="/assets/images/user1.png"
+                        imgSrc="/Online-Learning-App-React/assets/images/user1.png"
                     />
                     <InputField
                         type="password"
@@ -55,7 +55,7 @@ const LoginPage = () => {
                         ariaLabel="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        imgSrc="/assets/images/key1.png"
+                        imgSrc="/Online-Learning-App-React/assets/images/key1.png"
                         isPasswordField={true}
                         showPassword={showPassword}
                         togglePasswordVisibility={() => setShowPassword(!showPassword)}

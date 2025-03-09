@@ -53,7 +53,7 @@ const SignupPage: React.FC = () => {
                         ariaLabel="Username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        imgSrc='/assets/images/user1.png'
+                        imgSrc='/Online-Learning-App-React/assets/images/user1.png'
                     />
                     <InputField
                         type="email"
@@ -61,7 +61,7 @@ const SignupPage: React.FC = () => {
                         ariaLabel="Email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        imgSrc='/assets/images/envelope2.png'
+                        imgSrc='/Online-Learning-App-React/assets/images/envelope2.png'
                     />
                     <InputField
                         type="password"
@@ -69,7 +69,7 @@ const SignupPage: React.FC = () => {
                         ariaLabel="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        imgSrc='/assets/images/key1.png'
+                        imgSrc='/Online-Learning-App-React/assets/images/key1.png'
                     />
                     <InputField
                         type="password"
@@ -77,7 +77,7 @@ const SignupPage: React.FC = () => {
                         ariaLabel="Confirm Password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        imgSrc='/assets/images/key1.png'
+                        imgSrc='/Online-Learning-App-React/assets/images/key1.png'
                     />
                     {error && <p style={{ color: "red" }}>{error}</p>}
                     <button type="submit">Sign Up</button>
