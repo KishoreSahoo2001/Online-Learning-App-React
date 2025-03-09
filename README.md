@@ -1,7 +1,9 @@
 Online Learning Platform 🎓📚
+
 An online learning web application that allows users to explore, purchase, and learn from various educational articles and quizzes, similar to Udemy.
 
 🚀 Features
+
 📌 Article Categories as Dropdowns – Users can browse articles by selecting categories.
 📌 Explore Page – Displays article details such as author, price, content, and features.
 📌 User Authentication – Secure login and sign-up using JWT authentication.
@@ -11,6 +13,7 @@ An online learning web application that allows users to explore, purchase, and l
 📌 Responsive Design – Fully responsive UI for mobile and desktop.
 
 🛠 Tech Stack
+
 Frontend: React.js (TypeScript), CSS
 Backend: Node.js (Express.js), MySQL
 Testing: Jest, Supertest
@@ -18,6 +21,7 @@ Authentication: JWT (JSON Web Tokens)
 API Integration: Axios
 
 📂 Project Structure
+
 /online-learning-platform
 │── frontend/                    # React.js frontend
 │   ├── src/
