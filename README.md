@@ -36,6 +36,7 @@ API Integration: Axios
 │── .env                          # Environment variables
 
 🔗 API Endpoints
+
 📌 Articles API
 Method	Endpoint	Description
 GET	/articles/	Fetch all articles
@@ -46,6 +47,7 @@ GET	/quizzes/:article_id	Fetch quizzes for an article
 POST	/submit-quiz/	Submit quiz answers
 
 📜 Usage
+
 Users can browse articles by category using dropdowns.
 Clicking on an article navigates to the Explore Page, showing details and a purchase button.
 Purchased articles appear in My Learning where users can access content.
@@ -54,4 +56,5 @@ The payment system allows users to buy articles securely.
 
 
 📄 License
+
 This project is open-source and available under the MIT License.
